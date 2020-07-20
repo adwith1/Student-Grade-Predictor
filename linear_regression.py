@@ -12,6 +12,9 @@ import numpy as np
 import sklearn
 from sklearn import linear_model
 from sklearn.utils import shuffle
+import matplotlib.pyplot as pyplot
+import pickle
+from matplotlib import style
 
 data = pd.read_csv("student-mat.csv", sep=";")
 
@@ -31,12 +34,26 @@ y = np.array(data[predict])
 
 x_train, x_test, y_train, y_test = sklearn.model_selection.train_test_split(x, y, test_size = 0.1)
 
-linear = linear_model.LinearRegression()
-linear.fit(x_train, y_train)
+'''
+best = 0
+for _ in range(60):
+  x_train, x_test, y_train, y_test = sklearn.model_selection.train_test_split(x, y, test_size = 0.1)
+  linear = linear_model.LinearRegression()
+  linear.fit(x_train, y_train)
 
-accuracy = linear.score(x_test, y_test)
-accuracy_percentage = accuracy * 100
-print("Accuracy of predictions: " + str(round(accuracy_percentage, 2)) + "%")
+  accuracy = linear.score(x_test, y_test)
+  accuracy_percentage = accuracy * 100
+  print("Accuracy of predictions: " + str(round(accuracy_percentage, 2)) + "%")
+
+  #save the model to maintain accuracy 
+  if accuracy > best:
+    best = accuracy
+    with open("studentmodel.pickle", "wb") as f:
+      pickle.dump(linear, f)'''
+
+#load in the model we just created
+pickle_in = open("studentmodel.pickle", "rb")
+linear = pickle.load(pickle_in)
 
 print("Coefficients:\n", linear.coef_)
 print("Intercept:\n", linear.intercept_)
@@ -46,4 +63,12 @@ predictions = linear.predict(x_test)
 for p in range(len(predictions)):
   print(predictions[p], x_test[p], y_test[p])
   print()
+
+
+p = 'G1'
+style.use("ggplot")
+pyplot.scatter(data[p],data["G3"])
+pyplot.xlabel(p)
+pyplot.ylabel("Final Grade")
+pyplot.show()
 
