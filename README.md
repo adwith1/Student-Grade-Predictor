@@ -1,4 +1,4 @@
-# Student-Grade-Predicter
+# Student-Grade-Predictor
 This repository consists of a Machine Learning model that implements a linear regression algorithm which is used to predict a student's final grade based on select attributes.
 The attributes used in this model include the student's study time, number of failures, number of absences, first grading period, and second grading period.
 The data set can be found on UCI's machine learning repository under Student Record: https://archive.ics.uci.edu/ml/datasets/student+performance.
